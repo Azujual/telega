@@ -12,3 +12,6 @@ For a description of the Bot API, see this page: https://core.telegram.org/bots/
 {"ok":true,"result":{"id":369052943,"first_name":"AAZ_bot_inception","username":"AAZ_inception_bot"}}
 
 https://www.codementor.io/garethdwyer/building-a-telegram-bot-using-python-part-1-goi5fncay
+
+
+asdasdasdasdas
