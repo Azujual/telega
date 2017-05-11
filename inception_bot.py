@@ -2,7 +2,28 @@ import json
 import time
 import requests
 import urllib
+import re
 from dbhelper import DBHelper
+
+def getMicb():
+    selector = '<div id="currancy-rates">'
+    response = urllib.urlopen('http://www.micb.md/')
+    html = response.read()
+
+    html = html.replace('\r','')
+    html = html.replace('\n', '')
+    html = html.replace(' ', '')
+    html = re.sub(r'^.*currancy-rates', 'currancy-rates', html)
+    html = re.sub(r'</div>.*$', 'currancy-ratesEND', html)
+    html = html.replace('\t', '')
+    html = re.sub(r'</table>.*$', '</table>', html)
+    html = html.replace('</span></td></tr>', '\n')
+    html = re.sub(r'^.*USD', 'USD', html)
+    html = html.replace('</td><td>&mdash;</td><td>&mdash;</td><tdclass="dec"><span>', ' = ')
+    html = html.replace('</td><td>&mdash;</td><td>&mdash;</td><td><span>', ' = ')
+    html = html.replace('<tr><tdclass="currancy">', '')
+    html = html.replace('</tbody></table>', '')
+    return html
 
 db = DBHelper()
 
@@ -13,7 +34,7 @@ i = fo.readlines();
 # Close opend file
 fo.close()
 TOKEN = i[0].replace('\"', '')
-
+TOKEN = TOKEN.replace('\n', '')
 URL = "https://api.telegram.org/bot{}/".format(TOKEN)
 
 def get_url(url):
@@ -111,6 +132,8 @@ def handle_updates(updates):
         if text == "/done":
             keyboard = build_keyboard(items)
             send_message("Select an item to delete", chat, keyboard)
+        elif text == "micb":
+            send_message(getMicb(), chat)
         elif text == "/start":
             send_message(
                 "Welcome to your personal To Do list. Send any text to me and I'll store it as an item. Send /done to remove items",
@@ -135,20 +158,11 @@ def build_keyboard(items):
 
 def main():
     db.setup()
-
-    """
     last_update_id = None
     while True:
         print "Getting updates"
         updates = get_updates(last_update_id)
-        if len(updates["result"]) > 0:
-            last_update_id = get_last_update_id(updates) + 1
-            echo_all(updates)
-        time.sleep(2)"""
-    last_update_id = None
-    while True:
-        print "Getting updates"
-        updates = get_updates(last_update_id)
+	print updates
         if len(updates["result"]) > 0:
             last_update_id = get_last_update_id(updates) + 1
             handle_updates(updates)
