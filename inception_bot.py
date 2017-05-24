@@ -156,7 +156,9 @@ def handle_updates(updates):
             keyboard = build_keyboard(items)
             send_message("Select an item to delete", chat, keyboard)
         elif pattern.match(text):
-            srv_status(text)
+            send_message("Wait a sec...", chat)
+            response = srv_status(text)
+            send_message(response, chat)
         elif text == "micb":
             send_message(getMicb(), chat)
         elif text == "/start":
