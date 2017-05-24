@@ -10,7 +10,7 @@ import getpass
 import sys
 
 
-def srv_status(srvIp):
+def srv_status(hostname):
     try:
         s = pxssh.pxssh()
         username = 'root'
