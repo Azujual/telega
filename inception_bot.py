@@ -150,7 +150,7 @@ def handle_updates(updates):
         text = update["message"]["text"]
         chat = update["message"]["chat"]["id"]
         items = db.get_items(chat)  ##
-        pattern = re.compile("^[0-9][0-9][0-9]\.[0-9][0-9][0-9]\.[0-9][0-9][0-9]]")
+        pattern = re.compile("^[0-9]{1-3}\.[0-9]{1-3}\.[0-9]{1-3}]")
 
         if text == "/done":
             keyboard = build_keyboard(items)
