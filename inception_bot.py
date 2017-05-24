@@ -17,7 +17,7 @@ def srv_status(hostname):
         s.login (hostname, username, port=1322)
         s.sendline ('uptime')   # run a command
         s.prompt()             # match the prompt
-
+        print s.prompt()
         #print s.before          # print everything before the prompt.
         #s.sendline ('ps auxww | grep -i 3proxy | grep -v grep | grep -v srati |wc -l')
         #s.prompt()
