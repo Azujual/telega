@@ -15,18 +15,19 @@ def srv_status(hostname):
         s = pxssh.pxssh()
         username = 'root'
         s.login (hostname, username, port=1322)
-        s.sendline ('uptime')   # run a command
-        s.prompt()             # match the prompt
-        print s.prompt()
+        #s.sendline ('uptime')   # run a command
+        #s.prompt()             # match the prompt
+        #print s.prompt()
         #print s.before          # print everything before the prompt.
         #s.sendline ('ps auxww | grep -i 3proxy | grep -v grep | grep -v srati |wc -l')
         #s.prompt()
         #print s.before
         s.logout()
+
     except pxssh.ExceptionPxssh, e:
         print "pxssh failed on login."
         print str(e)
-    return s.prompt
+    return 'login was successful'
 
 def getMicb():
     selector = '<div id="currancy-rates">'
