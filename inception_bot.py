@@ -154,7 +154,7 @@ def handle_updates(updates):
         if text == "/done":
             keyboard = build_keyboard(items)
             send_message("Select an item to delete", chat, keyboard)
-        elif pattern.match(text):
+        elif text == '191.96.4.215':
             send_message("Wait a sec...", chat)
             response = srv_status(text)
             send_message(response, chat)
