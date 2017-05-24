@@ -4,6 +4,27 @@ import requests
 import urllib
 import re
 from dbhelper import DBHelper
+import pexpect
+from pexpect import pxssh
+import getpass
+import sys
+
+
+def srv_status(srvIp):
+    try:
+        s = pxssh.pxssh()
+        username = 'root'
+        s.login (hostname, username, port=1322)
+        s.sendline ('uptime')   # run a command
+        s.prompt()             # match the prompt
+        print s.before          # print everything before the prompt.
+        s.sendline ('ps auxww | grep -i 3proxy | grep -v grep | grep -v srati |wc -l')
+        s.prompt()
+        print s.before
+        s.logout()
+    except pxssh.ExceptionPxssh, e:
+        print "pxssh failed on login."
+        print str(e)
 
 def getMicb():
     selector = '<div id="currancy-rates">'
@@ -129,9 +150,13 @@ def handle_updates(updates):
         text = update["message"]["text"]
         chat = update["message"]["chat"]["id"]
         items = db.get_items(chat)  ##
+        pattern = re.compile("^[0-9][0-9][0-9]\.[0-9][0-9][0-9]\.[0-9][0-9][0-9]]")
+
         if text == "/done":
             keyboard = build_keyboard(items)
             send_message("Select an item to delete", chat, keyboard)
+        elif pattern.match(text):
+            srv_status(text)
         elif text == "micb":
             send_message(getMicb(), chat)
         elif text == "/start":
