@@ -37,10 +37,10 @@ def srv_status(hostname):
         b = b.replace('\r\n ', ' ')
         b = str(b[0:30])
         s.logout()
+        return b
     except pxssh.ExceptionPxssh, e:
-        print "pxssh failed on login."
-        print str(e)
-    return b
+        return "pxssh failed on login."
+        #return str(e)
 
 def getMicb():
     selector = '<div id="currancy-rates">'
