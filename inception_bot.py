@@ -9,6 +9,22 @@ from pexpect import pxssh
 import getpass
 import sys
 
+def input_check_ip(innput):
+    pr = []
+    file = open('list.lst', 'r')
+
+    for i in file.readlines():
+        pr.append(i.strip())
+
+    pattern = re.compile("^(\d+\.\d+.\d+\.\d+)$")
+
+    if pattern.match(innput) != 'none':
+        if innput in pr:
+            return 'Found ip in list'
+        else:
+            return 'Ip is not from list'
+    else:
+        return 'It is not IP address'
 
 def srv_status(hostname):
     try:
@@ -146,11 +162,13 @@ def handle_updates(updates):
             send_message(message, chat)
 """
 def handle_updates(updates):
+    answer = input_check_ip(updates)
     for update in updates["result"]:
         text = update["message"]["text"]
         chat = update["message"]["chat"]["id"]
         items = db.get_items(chat)  ##
-        pattern = re.compile("^[0-9]{1-3}\.[0-9]{1-3}\.[0-9]{1-3}")
+        send_message(answer, chat)
+        """
         if text == "/done":
             keyboard = build_keyboard(items)
             send_message("Select an item to delete", chat, keyboard)
@@ -176,7 +194,7 @@ def handle_updates(updates):
             items = db.get_items(chat)  ##
             message = "\n".join(items)
             send_message(message, chat)
-
+"""
 def build_keyboard(items):
     keyboard = [[item] for item in items]
     reply_markup = {"keyboard":keyboard, "one_time_keyboard": True}
