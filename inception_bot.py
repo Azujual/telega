@@ -35,7 +35,7 @@ def srv_status(hostname):
         s.prompt()  # match the prompt
         b = s.before
         b = b.replace('\r\n ', ' ')
-        print str(b[0:30])
+        b = str(b[0:30])
         s.logout()
     except pxssh.ExceptionPxssh, e:
         print "pxssh failed on login."
@@ -168,6 +168,9 @@ def handle_updates(updates):
         chat = update["message"]["chat"]["id"]
         items = db.get_items(chat)  ##
         answer = input_check_ip(text)
+        send_message(answer, chat)
+        send_message("Wait a sec...", chat)
+        answer = srv_status(text)
         send_message(answer, chat)
         """
         if text == "/done":
