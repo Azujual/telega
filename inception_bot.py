@@ -169,9 +169,10 @@ def handle_updates(updates):
         items = db.get_items(chat)  ##
         answer = input_check_ip(text)
         send_message(answer, chat)
-        send_message("Wait a sec...", chat)
-        answer = srv_status(text)
-        send_message(answer, chat)
+        if answer == 'Found ip in list':
+            send_message("Wait a sec...", chat)
+            answer = srv_status(text)
+            send_message(answer, chat)
         """
         if text == "/done":
             keyboard = build_keyboard(items)
