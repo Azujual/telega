@@ -17,7 +17,7 @@ def input_check_ip(innput):
         pr.append(i.strip())
 
     pattern = re.compile("^(\d+\.\d+.\d+\.\d+)$")
-
+    print innput
     if pattern.match(innput) != 'none':
         if innput in pr:
             return 'Found ip in list'
@@ -162,11 +162,12 @@ def handle_updates(updates):
             send_message(message, chat)
 """
 def handle_updates(updates):
-    answer = input_check_ip(updates)
+
     for update in updates["result"]:
         text = update["message"]["text"]
         chat = update["message"]["chat"]["id"]
         items = db.get_items(chat)  ##
+        answer = input_check_ip(text)
         send_message(answer, chat)
         """
         if text == "/done":
