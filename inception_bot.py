@@ -19,7 +19,7 @@ def input_check_ip(innput):
     pattern = re.compile("^(\d+\.\d+.\d+\.\d+)$")
     qwerty = str(pattern.match(innput))
     if qwerty != 'None':
-        if innput not in pr:
+        if innput in pr:
             return 'Found ip in list'
         else:
             return 'Ip is not from list'
