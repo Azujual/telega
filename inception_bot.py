@@ -19,9 +19,9 @@ def input_check_ip(innput):
     pattern = re.compile("^(\d+\.\d+.\d+\.\d+)$")
     qwerty = str(pattern.match(innput))
     if qwerty != 'None':
-        if innput in pr:
-            return 'Found ip in list'
-        else:
+        if innput not in pr:
+            #return 'Found ip in list'
+        #else:
             return 'Ip is not from list'
     else:
         return 'It is not IP address'
@@ -170,7 +170,7 @@ def handle_updates(updates):
         answer = input_check_ip(text)
         send_message(answer, chat)
         if answer == 'Found ip in list':
-            send_message("Wait a sec...", chat)
+            #send_message("Wait a sec...", chat)
             answer = srv_status(text)
             send_message(answer, chat)
         """
