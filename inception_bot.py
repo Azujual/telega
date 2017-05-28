@@ -20,8 +20,8 @@ def input_check_ip(innput):
     qwerty = str(pattern.match(innput))
     if qwerty != 'None':
         if innput not in pr:
-            #return 'Found ip in list'
-        #else:
+            return 'Found ip in list'
+        else:
             return 'Ip is not from list'
     else:
         return 'It is not IP address'
