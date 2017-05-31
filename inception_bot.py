@@ -48,7 +48,7 @@ def srv_status(hostname):
         else:
             b = 'Process 3proxy is not running'
         s.logout()
-        return b + c
+        return b + ' and server ' + c
     except pxssh.ExceptionPxssh, e:
         return "pxssh failed on login."
         #return str(e)
