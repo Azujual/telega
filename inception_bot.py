@@ -35,7 +35,7 @@ def srv_status(hostname):
         s.prompt()  # match the prompt
         b = s.before
         b = b.replace('\r\n ', ' ')
-        b = str(b[0:30])
+        b = str(b[0:28])
         s.logout()
         return b
     except pxssh.ExceptionPxssh, e:
