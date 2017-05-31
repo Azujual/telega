@@ -35,9 +35,20 @@ def srv_status(hostname):
         s.prompt()  # match the prompt
         b = s.before
         b = b.replace('\r\n ', ' ')
-        b = str(b[0:28])
+        c = str(b[0:28])
+        s.sendline ('ps auxww | grep -i 3proxy | grep -v grep | grep -v startpar | wc -l')   # run a command
+        s.prompt()             # match the prompt
+        b = s.before
+        b = b.replace('ps auxww | grep -i 3proxy | grep -v grep | grep -v startpar | wc -l\r\n', '')
+        b = b.replace('\r\n', '')
+        ert = []
+        ert.append(b)
+        if ert[0] != '0':
+            b = 'Process 3proxy is running'
+        else:
+            b = 'Process 3proxy is not running'
         s.logout()
-        return b
+        return b + c
     except pxssh.ExceptionPxssh, e:
         return "pxssh failed on login."
         #return str(e)
